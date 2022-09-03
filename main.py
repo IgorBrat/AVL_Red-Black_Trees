@@ -1,4 +1,5 @@
 from red_black_tree import RedBlackTree
+from color import Color
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     tree.unbalanced_insert(18)
     tree.unbalanced_insert(17)
     tree.print_tree()
+
 
 if __name__ == '__main__':
     main()
