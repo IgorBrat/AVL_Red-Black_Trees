@@ -6,20 +6,20 @@ class AVLNode(Node):
         super().__init__(value)
         self.height = 0
 
-    def __str__(self):
-        if self.parent is not None:
-            left_height = self.parent.left.height if self.parent.left is not None else -1
-            right_height = self.parent.right.height if self.parent.right is not None else -1
-            res = "\t" * (max(left_height, right_height)) + self.value.__str__() + f"({self.height})" + "\n"
-        else:
-            res = "\t" * self.height + self.value.__str__() + f"({self.height})" + "\n"
+    def __str__(self, level=0):
+        res = ""
         if self.left is not None and self.right is not None:
-            res += self.left.__str__()
-            res += self.right.__str__()
-        elif self.left is None and self.right is not None:
-            res += "\t" * self.right.height + "None" + "\n"
-            res += self.right.__str__()
+            res += self.left.__str__(level + 1)
+            res += "\t" * level + "-> " + self.value.__str__() + "\n"
+            res += self.right.__str__(level + 1)
         elif self.left is not None and self.right is None:
-            res += self.left.__str__()
-            res += "\t" * self.left.height + "None" + "\n"
+            res += self.left.__str__(level + 1)
+            res += "\t" * level + "-> " + self.value.__str__() + "\n"
+            res += "\t" * (level + 1) + "-> " + "None" + "\n"
+        elif self.left is None and self.right is not None:
+            res += "\t" * (level + 1) + "-> " + "None" + "\n"
+            res += "\t" * level + "-> " + self.value.__str__() + "\n"
+            res += self.right.__str__(level + 1)
+        else:
+            res += "\t" * level + "-> " + self.value.__str__() + "\n"
         return res
