@@ -1,59 +1,30 @@
 from __future__ import annotations
 from rotation import right_rotate, left_rotate
-
-
-class Node:
-    def __init__(self, value: int):
-        self.value = value
-        self.left = None
-        self.right = None
-        self.parent = None
-        self.height = 0
-
-    def __str__(self):
-        if self.parent is not None:
-            left_height = self.parent.left.height if self.parent.left is not None else -1
-            right_height = self.parent.right.height if self.parent.right is not None else -1
-            res = "\t" * (max(left_height, right_height)) + self.value.__str__() + f"({self.height})" + "\n"
-        else:
-            res = "\t" * self.height + self.value.__str__() + f"({self.height})" + "\n"
-        if self.left is not None and self.right is not None:
-            res += self.left.__str__()
-            res += self.right.__str__()
-        elif self.left is None and self.right is not None:
-            res += "\t" * self.right.height + "None" + "\n"
-            res += self.right.__str__()
-        elif self.left is not None and self.right is None:
-            res += self.left.__str__()
-            res += "\t" * self.left.height + "None" + "\n"
-        return res
-
-    def __repr__(self):
-        return f"Node({self.value})"
+from avl_node import AVLNode
 
 
 class AVLTree:
-    def __init__(self, root: Node = None):
+    def __init__(self, root: AVLNode = None):
         self.root = root
 
-    def __balance_ancestors_height(self, parent: Node):
+    def __balance_ancestors_height(self, parent: AVLNode):
         while parent is not None:
             left_height = parent.left.height if parent.left is not None else -1
             right_height = parent.right.height if parent.right is not None else -1
             parent.height = max(left_height, right_height) + 1
             parent = parent.parent
 
-    def __get_balance_factor(self, node: Node) -> int:
+    def __get_balance_factor(self, node: AVLNode) -> int:
         left_height = node.left.height if node.left is not None else -1
         right_height = node.right.height if node.right is not None else -1
         return left_height - right_height
 
-    def __unbalanced_insert(self, value: int) -> Node:
+    def __unbalanced_insert(self, value: int) -> AVLNode:
         if value is None:
             raise ValueError("Can`t insert empty node")
         else:
             if self.root is None:
-                self.root = Node(value)
+                self.root = AVLNode(value)
                 return self.root
             else:
                 temp = self.root
@@ -62,7 +33,7 @@ class AVLTree:
                         raise ValueError("Can`t insert duplicate")
                     elif temp.value > value:
                         if temp.left is None:
-                            temp.left = Node(value)
+                            temp.left = AVLNode(value)
                             temp.left.parent = temp
                             self.__balance_ancestors_height(temp.left)
                             return temp.left
@@ -70,7 +41,7 @@ class AVLTree:
                             temp = temp.left
                     else:
                         if temp.right is None:
-                            temp.right = Node(value)
+                            temp.right = AVLNode(value)
                             temp.right.parent = temp
                             self.__balance_ancestors_height(temp.right)
                             return temp.right
