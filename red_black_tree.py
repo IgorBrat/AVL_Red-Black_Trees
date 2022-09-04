@@ -101,10 +101,9 @@ class RedBlackTree:
 
     def delete(self, value: int):
         node_to_delete = self.__get_node_to_delete(value)
-        y = node_to_delete
         if node_to_delete is None:
             raise ValueError("No such node in the tree")
-        original_color = y.color
+        original_color = node_to_delete.color
         if node_to_delete.left == self.Null:
             curr_child = node_to_delete.right
             self.__replace(node_to_delete, node_to_delete.right)
@@ -112,21 +111,21 @@ class RedBlackTree:
             curr_child = node_to_delete.left
             self.__replace(node_to_delete, node_to_delete.left)
         else:
-            y = node_to_delete.right
-            while y.left != self.Null:
-                y = y.left
-            original_color = y.color
-            curr_child = y.right
-            if y.parent == node_to_delete:
-                curr_child.parent = y
+            node_to_replace = node_to_delete.right
+            while node_to_replace.left != self.Null:
+                node_to_replace = node_to_replace.left
+            original_color = node_to_replace.color
+            curr_child = node_to_replace.right
+            if node_to_replace.parent == node_to_delete:
+                curr_child.parent = node_to_replace
             else:
-                self.__replace(y, y.right)
-                y.right = node_to_delete.right
-                y.right.parent = y
-            self.__replace(node_to_delete, y)
-            y.left = node_to_delete.left
-            y.left.parent = y
-            y.color = node_to_delete.color
+                self.__replace(node_to_replace, node_to_replace.right)
+                node_to_replace.right = node_to_delete.right
+                node_to_replace.right.parent = node_to_replace
+            self.__replace(node_to_delete, node_to_replace)
+            node_to_replace.left = node_to_delete.left
+            node_to_replace.left.parent = node_to_replace
+            node_to_replace.color = node_to_delete.color
 
         if original_color.value == "black":
             self.__fix_balance(curr_child)
