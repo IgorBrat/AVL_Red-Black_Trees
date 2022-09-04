@@ -17,6 +17,7 @@ class RedBlackTree:
                 self.root = RedBlackNode(value)
                 self.root.left = self.Null
                 self.root.right = self.Null
+                self.root.color = color
                 return self.root
             else:
                 temp = self.root
@@ -176,14 +177,13 @@ class RedBlackTree:
             sibling = curr_node.parent.left
         return sibling
 
-
     def case_3_resolver(self, sibling: RedBlackNode, curr_node_is: str):
         sibling.color = Color.RED
         if curr_node_is == "left":
-            sibling.left.color.value = Color.BLACK
+            sibling.left.color = Color.BLACK
             self.right_rotate(sibling)
         if curr_node_is == "right":
-            sibling.right.color.value = Color.BLACK
+            sibling.right.color = Color.BLACK
             self.left_rotate(sibling)
 
     def case_4_resolver(self, curr_node: RedBlackNode, sibling: RedBlackNode, curr_node_is: str):
