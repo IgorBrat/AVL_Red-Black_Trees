@@ -2,6 +2,8 @@ from avl_tree import AVLTree
 
 
 def main():
+    # Test insertion
+
     tree = AVLTree()
     tree.insert(10)
     tree.insert(11)
