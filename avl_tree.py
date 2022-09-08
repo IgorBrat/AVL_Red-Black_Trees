@@ -65,6 +65,9 @@ class AVLTree:
                             right_rotate(grandparent)
                             if grandparent == self.root:
                                 self.root = node
+                    self.__balance_ancestors_height(node)
+                    self.__balance_ancestors_height(parent)
+                    self.__balance_ancestors_height(grandparent)
                 if self.__get_balance_factor(grandparent) < -1:
                     if grandparent.right is not None and grandparent.right == parent:
                         if parent.right == node:
@@ -76,9 +79,9 @@ class AVLTree:
                             left_rotate(grandparent)
                             if grandparent == self.root:
                                 self.root = node
-                self.__balance_ancestors_height(node)
-                self.__balance_ancestors_height(parent)
-                self.__balance_ancestors_height(grandparent)
+                    self.__balance_ancestors_height(node)
+                    self.__balance_ancestors_height(parent)
+                    self.__balance_ancestors_height(grandparent)
                 node = node.parent
                 if node is not None:
                     parent = node.parent
