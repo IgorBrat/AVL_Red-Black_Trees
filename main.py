@@ -16,12 +16,16 @@ def main():
     tree.unbalanced_insert(25, Color.BLACK)
     tree.unbalanced_insert(40, Color.BLACK)
     tree.unbalanced_insert(27, Color.RED)
+    tree.print_tree()
+    print("=" * 30)
     tree.delete(6)
     tree.delete(3)
     tree.delete(8)
     tree.delete(20)
     tree.delete(40)
     tree.print_tree()
+
+    print("\n\n" + "="*30)
 
     tree2 = RedBlackTree()
     tree2.unbalanced_insert(55, Color.BLACK)
